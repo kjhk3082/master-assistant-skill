@@ -1,0 +1,30 @@
+# Example: handoff.md
+
+> Update this file at the end of every session. This is your "save state."
+
+---
+
+## Session: 2026-04-08
+
+### Finished
+- Implemented JWT token generation in `src/auth/jwt.ts`
+- Updated `src/middleware/auth.ts` to verify JWT on every request
+- All 47 existing tests pass
+
+### Blocked
+- `src/auth/refresh.ts` — refresh token rotation logic is unclear
+  - Need to decide: single-use refresh tokens vs. sliding window?
+  - **Decision needed from user before proceeding**
+
+### Next Steps
+1. Implement refresh token rotation (after decision above)
+2. Add integration tests for token expiry edge cases
+3. Update `docs/api-spec.md` with new JWT header format
+
+### Context Files
+- `src/auth/jwt.ts` — new file, main implementation
+- `src/middleware/auth.ts` — modified, lines 45-78
+- `docs/wiki/patterns.md` — added "JWT Best Practices" pattern
+
+### Gotchas Discovered
+- JWT `exp` claim must be in **seconds** (not milliseconds) — added to `gotchas.md`

@@ -1,0 +1,30 @@
+# [Project Name] — CLAUDE.md
+
+> Keep this file under 80 lines. Move detailed docs to docs/wiki/.
+
+## Project Overview
+[One paragraph: what this project does, tech stack, key constraints]
+
+## Critical Rules (Never Violate)
+- [ ] Rule 1: [e.g., "Never commit secrets to git"]
+- [ ] Rule 2: [e.g., "All DB writes must be transactional"]
+- [ ] Rule 3: [e.g., "Run tests before every commit"]
+
+## Architecture Decisions
+- [Decision 1]: [Reason]
+- [Decision 2]: [Reason]
+
+## Common Gotchas
+- [Gotcha 1]: [How to avoid]
+- [Gotcha 2]: [How to avoid]
+
+## Done When (Default Checklist)
+- [ ] Tests pass (exit code 0)
+- [ ] No lint errors
+- [ ] handoff.md updated
+- [ ] No hardcoded secrets
+
+## References
+- Patterns: docs/wiki/patterns.md
+- Gotchas: docs/wiki/gotchas.md
+- Retrospective: docs/wiki/retrospective.md

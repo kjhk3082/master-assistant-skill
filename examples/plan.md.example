@@ -1,0 +1,36 @@
+# Example: plan.md
+
+> Copy this file to your project root as `plan.md` before starting any significant task.
+
+---
+
+## Goal
+Refactor the authentication module to use JWT instead of session-based auth.
+
+## Inputs
+- `src/auth/session.ts` — current session-based implementation
+- `src/middleware/auth.ts` — middleware that needs updating
+- `docs/api-spec.md` — API contract that must not break
+
+## Done When
+- [ ] All existing tests pass (exit code 0)
+- [ ] New JWT tests added and passing
+- [ ] No `console.log` left in production code
+- [ ] `handoff.md` updated with migration notes
+- [ ] API contract in `docs/api-spec.md` unchanged
+
+## Steps
+1. Read `src/auth/session.ts` and understand current flow
+2. Write failing tests for JWT implementation
+3. Implement JWT token generation and validation
+4. Update `src/middleware/auth.ts` to verify JWT
+5. Run full test suite
+6. Update `handoff.md`
+
+## Rollback Point
+- Git commit: `git stash` before starting
+- If blocked: revert to `HEAD~1`
+
+## Constraints
+- Do NOT change the public API shape
+- Do NOT use any external JWT library — use Node.js built-in `crypto`
