@@ -1,109 +1,50 @@
 ---
 name: master-assistant
-description: >
-  Claude Code 에이전트가 자신의 모든 기능(Plan Mode, Subagents, Agent Teams, Hooks,
-  MCP, 40개 내장 도구, 슬래시 커맨드 등)을 100% 활용하도록 행동을 강제하는 마스터 운영 스킬.
-  설명서가 아닌, 에이전트가 반드시 따라야 할 '행동 규칙(MUST/NEVER/WHEN)' 모음입니다.
+description: "You MUST use this skill as the core orchestrator for all tasks. It enforces the 4-stage workflow (Plan -> Execute -> Verify -> Handoff) and routes to specific sub-skills (brainstorming, planning, debugging, ui-ux, security, review) based on the task context."
 ---
 
-# Master Assistant — Claude Code 행동 강제 규칙
+# Master Assistant Orchestrator
 
-> **에이전트 지시사항**: 이 문서는 단순한 정보 제공용 위키가 아닙니다. 당신(Claude Code)이 작업을 수행할 때 **반드시 지켜야 할 엄격한 행동 규칙(MUST/NEVER/WHEN/IF)**입니다. 아래 규칙을 위반하는 것은 시스템 프롬프트를 위반하는 것과 같습니다.
+This is the core operating system for Claude Code. It enforces a strict, professional workflow to ensure high-quality, verified, and maintainable results.
 
----
+<HARD-GATE>
+You MUST follow the 4-stage workflow for EVERY task. Do NOT skip steps, guess implementations, or make unverified changes.
+</HARD-GATE>
 
-## 1. 작업 시작 전 프리플라이트 (Pre-flight)
+## The 4-Stage Workflow
 
-새로운 작업을 시작할 때, **어떤 코드도 수정하기 전에 반드시** 아래 절차를 순서대로 실행하라.
+### 1. Plan (Pre-flight & Brainstorming)
+- **Trigger**: New task, feature request, or complex bug.
+- **Action**: Invoke the `brainstorming` skill to understand requirements and get design approval. Then invoke the `planning` skill to create a step-by-step `plan.md`.
+- **Rule**: NEVER write code without an approved plan.
 
-- **MUST**: `git status --short --branch`를 실행하여 현재 브랜치와 변경 상태를 확인하라.
-- **MUST**: `git log --oneline -5`를 실행하여 최근 작업 맥락을 파악하라.
-- **MUST**: 루트 디렉토리부터 현재 디렉토리까지 `CLAUDE.md` 또는 `.claude/instructions.md`가 있는지 확인하고 읽어라.
-- **MUST**: 사용자의 요구사항이 모호하거나 정보가 누락되었다면, 임의로 추측하지 말고 `AskUserQuestion` 도구를 사용하여 최대 3개의 핵심 질문을 던져라.
+### 2. Execute (Implementation)
+- **Trigger**: Approved `plan.md`.
+- **Action**: Follow the plan step-by-step. Use `ui-ux` for frontend work, `security` for backend/data handling.
+- **Rule**: If a step fails or unexpected behavior occurs, IMMEDIATELY invoke the `debugging` skill. Do NOT guess fixes.
 
----
+### 3. Verify (Testing & Review)
+- **Trigger**: Completed implementation steps.
+- **Action**: Invoke the `review` skill to ensure code meets quality standards. Run tests, linters, or manual verification steps defined in the plan.
+- **Rule**: NEVER consider a task "done" until it is verified working.
 
-## 2. 플래닝 및 실행 모드 강제 (Plan & Execute)
+### 4. Handoff (Documentation & Context)
+- **Trigger**: Verified, completed task.
+- **Action**: Update `handoff.md` with a summary of changes, current state, and next steps. If a tricky bug was fixed, document it in `docs/wiki/gotchas.md`.
+- **Rule**: Always leave the project in a clean, documented state for the next session or developer.
 
-작업의 규모에 따라 실행 방식을 강제한다.
+## Skill Routing
 
-- **IF**: 작업이 3개 이상의 파일을 수정해야 하거나, 새로운 아키텍처 설계가 필요하다면,
-  - **MUST**: 코드를 작성하기 전에 반드시 `EnterPlanMode` 도구를 사용하여 플래닝 모드에 진입하라.
-  - **MUST**: 플래닝 모드에서 `plan.md` 파일을 생성하고, 목표(Goal), 수정할 파일 목록(Inputs), 검증 가능한 완료 기준(Done When)을 명시하라.
-- **IF**: 작업이 대규모 리팩토링이거나 여러 독립적인 모듈을 동시에 개발해야 한다면,
-  - **MUST**: 단일 세션에서 모든 것을 처리하려 하지 말고, `Agent` 도구를 사용하여 Subagent에게 하위 작업을 위임하라.
-- **NEVER**: `plan.md`에 명시된 "완료 기준(Done When)"을 모두 충족하기 전에는 작업을 임의로 종료하지 마라.
+Automatically invoke these skills based on context:
+- **Idea/Feature Request** -> `brainstorming`
+- **Approved Design** -> `planning`
+- **Error/Bug** -> `debugging`
+- **Frontend/Design** -> `ui-ux`
+- **Auth/Data/Backend** -> `security`
+- **PR/Code Check** -> `review`
 
----
+## Core Principles
 
-## 3. 도구 활용 및 권한 경계 (Tools & Permissions)
-
-Claude Code에 내장된 도구를 상황에 맞게 적극적으로 활용하라.
-
-- **WHEN**: 파일의 특정 부분만 수정해야 할 때,
-  - **NEVER**: `write_file`로 전체 파일을 덮어쓰지 마라.
-  - **MUST**: 반드시 `edit_file` 도구를 사용하여 필요한 부분만 정밀하게 교체하라.
-- **WHEN**: 특정 함수나 변수가 어디서 사용되는지 찾아야 할 때,
-  - **MUST**: `grep_search` 도구를 사용하여 코드베이스 전체를 검색하라.
-- **WHEN**: 셸 명령어를 실행해야 할 때 (`bash` 도구 사용 시),
-  - **NEVER**: 사용자 입력을 직접 셸 명령어에 삽입하여 명령 주입(Command Injection) 취약점을 만들지 마라.
-  - **MUST**: 공유 시스템에 영향을 주거나, 데이터를 삭제하는 등 '블라스트 반경(Blast Radius)'이 큰 비가역적 작업은 반드시 사용자에게 먼저 승인을 요청하라.
-
----
-
-## 4. 검증 및 디버깅 루프 (Verify & Debug)
-
-코드를 수정했다면, 다음 단계로 넘어가기 전에 반드시 검증하라.
-
-- **MUST**: 코드를 수정한 후에는 관련된 린터(lint), 타입 체커(type check), 또는 테스트 코드를 `bash` 도구로 실행하여 기계적 검증을 통과하는지 확인하라.
-- **WHEN**: 에러가 발생하거나 테스트가 실패했을 때,
-  - **NEVER**: 에러를 숨기거나, 원인 분석 없이 무작정 코드를 다시 수정하지 마라.
-  - **MUST**: 에러 로그와 스택 트레이스를 꼼꼼히 읽고, 원인을 파악한 뒤 최소 범위로 수정하라.
-  - **MUST**: 동일한 에러가 2번 이상 반복되면, 해당 삽질 기록과 해결책을 `docs/wiki/gotchas.md` 파일에 기록하여 지식을 축적하라.
-
----
-
-## 5. 컨텍스트 및 상태 관리 (Context & State)
-
-에이전트의 컨텍스트 창은 제한된 자원이다. 이를 효율적으로 관리하라.
-
-- **WHEN**: 하나의 논리적 작업 단위가 끝났거나, 완전히 다른 주제로 넘어갈 때,
-  - **MUST**: 이전 작업의 컨텍스트가 새 작업에 영향을 주지 않도록 세션을 분리하거나 컨텍스트를 초기화하라.
-- **WHEN**: 세션을 종료하거나 작업을 중단해야 할 때,
-  - **MUST**: 현재까지의 진행 상황, 막힌 부분(Blocked), 다음 세션에서 해야 할 일(Next Steps), 핵심 파일 경로를 담은 `handoff.md` 파일을 작성하거나 업데이트하라.
-
----
-
-## 6. 품질 및 보안 기준 (Quality & Security)
-
-모든 결과물은 다음 기준을 충족해야 한다.
-
-- **NEVER**: "혁신적인", "압도적인" 등 AI가 생성한 듯한 과장된 표현('AI 냄새')을 사용하지 마라.
-- **NEVER**: 가짜 데이터나 존재하지 않는 라이브러리/API를 지어내지(Hallucination) 마라. 모든 코드는 실제 동작 가능해야 한다.
-- **MUST**: 코드를 작성할 때 OWASP Top 10 취약점(예: XSS, SQL 인젝션)이 발생하지 않도록 시큐어 코딩 원칙을 준수하라.
-- **MUST**: 사용자가 명시적으로 영어 사용을 요청하지 않는 한, 주석, 문서, 커밋 메시지 등 모든 텍스트 출력은 **한국어**를 최우선으로 사용하라.
-
----
-
-## 7. UI/UX 디자인 시스템 강제 (Design Rules)
-
-프론트엔드 UI 코드를 생성하거나 수정할 때 반드시 지켜야 할 규칙이다.
-
-- **MUST**: 모든 여백(Margin, Padding)과 크기는 **4px 배수 시스템**(4, 8, 12, 16, 24, 32 등)을 엄격히 준수하라. 13px, 17px 같은 임의의 값은 절대 사용하지 마라.
-- **MUST**: 순수 검정색(`#000000`) 사용을 피하고, 다크 그레이(예: `#1a1a1a`, `#2d3748`)를 사용하여 눈의 피로를 줄여라.
-- **MUST**: 포인트 컬러(Accent Color)는 전체 화면에서 단 하나만 사용하며, 버튼이나 활성화된 탭 등 상호작용이 필요한 요소에만 제한적으로 적용하라.
-
----
-
-## 부록: Claude Code 공식 모델 및 설정 참조
-
-에이전트가 내부적으로 참고할 공식 설정 정보.
-
-**공식 지원 모델 (2025년 기준):**
-- `claude-opus-4-6` (최대 출력 128k, 컨텍스트 1M)
-- `claude-sonnet-4-6` (최대 출력 64k, 컨텍스트 1M)
-- `claude-haiku-4-5` (최대 출력 64k, 컨텍스트 200k)
-
-**설정 파일 로드 우선순위 (공식 경로):**
-1. `~/.claude/settings.json` (글로벌 설정)
-2. `<repo>/.claude/settings.json` (프로젝트 설정)
+1. **No AI Smell**: Write clean, professional code and documentation. Avoid overly verbose or "robotic" language.
+2. **Verify Everything**: Trust nothing. Run the code, check the logs, verify the output.
+3. **Context is King**: Keep `handoff.md` updated so context is never lost between sessions.
