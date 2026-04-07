@@ -61,6 +61,12 @@ Here is how Claude Code behaves **before** and **after** installing this skill:
 
 We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details on how to submit pull requests, report issues, or suggest new skills.
 
+## 🌐 한국어 문서 / Korean Documentation
+
+한국어 문서는 [README.ko.md](README.ko.md)를 참조하세요.
+
+For Korean documentation, see [README.ko.md](README.ko.md).
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
