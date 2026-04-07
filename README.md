@@ -2,6 +2,8 @@
 
 <div align="center">
 
+<img src="assets/hero-banner.png" alt="Master Assistant Hero Banner" width="100%">
+
 [![Claude Code Skill](https://img.shields.io/badge/Claude_Code-Skill-7B61FF?style=for-the-badge&logo=anthropic&logoColor=white)](https://github.com/kjhk3082/master-assistant-skill)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](CONTRIBUTING.md)
@@ -9,7 +11,7 @@
 
 **The definitive skill for unlocking 100% of Claude Code's capabilities.**
 
-[한국어](#한국어) · [English](#english) · [Installation](#-installation) · [Usage](#-usage)
+[한국어](#한국어) · [English](#english) · [Installation](#-installation) · [Usage & Examples](#-usage--examples)
 
 </div>
 
@@ -24,6 +26,10 @@
 > *The bottleneck is no longer typing speed. When agent systems can rebuild a codebase in hours, the scarce resource becomes architectural clarity, task decomposition, judgment, and conviction about what is worth building.*
 
 Most Claude Code users tap into less than 30% of its actual capabilities. This skill closes that gap by encoding a complete operating manual directly into the agent's context.
+
+<div align="center">
+<img src="assets/example-before-after.png" alt="Before and After Comparison" width="100%">
+</div>
 
 ### What's Inside
 
@@ -85,9 +91,32 @@ cp SKILL.md ~/.claude/skills/master-assistant/
 
 ---
 
-## 🚀 Usage
+## 🚀 Usage & Examples
 
 Once installed, invoke the skill explicitly or let Claude Code reference it automatically.
+
+<div align="center">
+<img src="assets/workflow.png" alt="Agent Execution Workflow" width="100%">
+</div>
+
+### Real-world Example: Refactoring a Component
+
+**Without the skill:**
+```
+User: "Refactor the Login component to use React Hook Form"
+Claude: *Immediately starts overwriting Login.tsx, breaks tests, stops without telling you what else needs fixing.*
+```
+
+**With `master-assistant-skill`:**
+```
+User: "Refactor the Login component to use React Hook Form"
+Claude: 
+1. (Pre-flight) Runs `git status` to check if working tree is clean.
+2. (Plan Mode) Creates `plan.md` because this affects multiple files (Login.tsx, types.ts, validation.ts).
+3. (Execute) Uses `edit_file` to precisely update only the necessary blocks.
+4. (Verify) Runs `npm run lint` and `npm test` automatically.
+5. (Handoff) Updates `handoff.md` with the completed status and any remaining tech debt.
+```
 
 ### Explicit Invocation
 
@@ -109,22 +138,6 @@ Once installed, invoke the skill explicitly or let Claude Code reference it auto
 
 # Deep Planning
 /ultraplan "Migrate monolith to microservices"  # Multi-step reasoning plan
-```
-
-### Workflow Example
-
-```
-1. Start a new task:
-   "Refactor the authentication module"
-
-2. Claude Code will automatically:
-   ✓ Run pre-flight checks (read CLAUDE.md, check git status)
-   ✓ Enter Plan Mode and create plan.md
-   ✓ Assess blast radius before any changes
-   ✓ Execute with appropriate permission mode
-   ✓ Run verification (lint, tests, /review)
-   ✓ Write handoff.md on session end
-   ✓ Update docs/wiki/patterns.md with learnings
 ```
 
 ---
