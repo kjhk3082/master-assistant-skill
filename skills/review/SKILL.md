@@ -1,6 +1,6 @@
 ---
 name: review
-description: "You MUST use this when reviewing code changes, pull requests, or verifying implementations against requirements. Enforces quality standards and best practices."
+description: "[EN] You MUST use this when reviewing code changes, pull requests, or verifying implementations against requirements. Enforces quality standards and best practices. [KO] 코드 변경 사항, 풀 리퀘스트를 검토하거나 요구사항에 대한 구현을 확인할 때 반드시 사용해야 합니다. 품질 기준과 모범 사례를 강제합니다."
 ---
 
 # Code Review & Verification

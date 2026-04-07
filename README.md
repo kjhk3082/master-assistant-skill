@@ -64,3 +64,17 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## ⌨️ Custom Slash Commands
+
+You can also trigger these skills manually using the included slash commands:
+(포함된 슬래시 커맨드를 사용하여 수동으로 스킬을 트리거할 수도 있습니다:)
+
+| Command | Description |
+|---------|-------------|
+| `/m-brainstorming` | Start brainstorming process (브레인스토밍 시작) |
+| `/m-planning` | Create implementation plan (구현 계획 작성) |
+| `/m-debugging` | Start systematic debugging (체계적인 디버깅 시작) |
+| `/m-ui-ux` | Apply UI/UX guidelines (UI/UX 가이드라인 적용) |
+| `/m-security` | Apply secure coding practices (보안 코딩 관행 적용) |
+| `/m-review` | Review code changes (코드 변경 사항 검토) |

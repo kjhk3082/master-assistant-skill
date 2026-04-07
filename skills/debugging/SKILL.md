@@ -1,6 +1,6 @@
 ---
 name: debugging
-description: "You MUST use this when investigating errors, bugs, or unexpected behavior. Provides a systematic approach to root cause analysis."
+description: "[EN] You MUST use this when investigating errors, bugs, or unexpected behavior. Provides a systematic approach to root cause analysis. [KO] 에러, 버그 또는 예기치 않은 동작을 조사할 때 반드시 사용해야 합니다. 근본 원인 분석에 대한 체계적인 접근 방식을 제공합니다."
 ---
 
 # Systematic Debugging

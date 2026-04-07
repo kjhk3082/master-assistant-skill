@@ -1,6 +1,6 @@
 ---
 name: planning
-description: "You MUST use this after brainstorming or when you have a clear design/spec but before writing any code. Breaks down work into actionable, verifiable steps."
+description: "[EN] You MUST use this after brainstorming or when you have a clear design/spec but before writing any code. Breaks down work into actionable, verifiable steps. [KO] 브레인스토밍 후 또는 명확한 설계/사양이 있지만 코드를 작성하기 전에 반드시 사용해야 합니다. 작업을 실행 가능하고 검증 가능한 단계로 나눕니다."
 ---
 
 # Writing Implementation Plans

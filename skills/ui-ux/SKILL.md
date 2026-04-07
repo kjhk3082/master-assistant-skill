@@ -1,6 +1,6 @@
 ---
 name: ui-ux
-description: "You MUST use this when designing, building, or reviewing user interfaces. Enforces design consistency, accessibility, and modern aesthetics."
+description: "[EN] You MUST use this when designing, building, or reviewing user interfaces. Enforces design consistency, accessibility, and modern aesthetics. [KO] 사용자 인터페이스를 설계, 구축 또는 검토할 때 반드시 사용해야 합니다. 디자인 일관성, 접근성 및 현대적인 미학을 강제합니다."
 ---
 
 # UI/UX Design & Implementation

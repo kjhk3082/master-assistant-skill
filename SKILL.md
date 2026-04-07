@@ -1,6 +1,6 @@
 ---
 name: master-assistant
-description: "You MUST use this skill as the core orchestrator for all tasks. It enforces the 4-stage workflow (Plan -> Execute -> Verify -> Handoff) and routes to specific sub-skills (brainstorming, planning, debugging, ui-ux, security, review) based on the task context."
+description: "[EN] You MUST use this skill as the core orchestrator for all tasks. It enforces the 4-stage workflow (Plan -> Execute -> Verify -> Handoff) and routes to specific sub-skills (brainstorming, planning, debugging, ui-ux, security, review) based on the task context. [KO] 모든 작업의 핵심 오케스트레이터로 이 스킬을 반드시 사용해야 합니다. 4단계 워크플로우(계획 -> 실행 -> 검증 -> 핸드오프)를 강제하고 작업 컨텍스트에 따라 특정 하위 스킬로 라우팅합니다."
 ---
 
 # Master Assistant Orchestrator

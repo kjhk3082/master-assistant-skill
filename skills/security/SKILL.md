@@ -1,6 +1,6 @@
 ---
 name: security
-description: "You MUST use this when writing or reviewing code that handles user input, authentication, authorization, or sensitive data. Enforces secure coding practices."
+description: "[EN] You MUST use this when writing or reviewing code that handles user input, authentication, authorization, or sensitive data. Enforces secure coding practices. [KO] 사용자 입력, 인증, 권한 부여 또는 민감한 데이터를 처리하는 코드를 작성하거나 검토할 때 반드시 사용해야 합니다. 안전한 코딩 관행을 강제합니다."
 ---
 
 # Secure Coding Practices
